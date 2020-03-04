@@ -1,1 +1,1 @@
-# js30-28-video-speed-controller
+# JavaScript 30 #28: Video Speed Controller
