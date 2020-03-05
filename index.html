@@ -16,33 +16,36 @@
 
 <script>
 
-  const speed = document.querySelector('.speed');
-  const bar = document.querySelector('.speed-bar');
-  const video = document.querySelector('.flex');
+  const hoverSpeed = {
+    speed: document.querySelector('.speed'),
+    bar: document.querySelector('.speed-bar'),
+    video: document.querySelector('.flex'),
+    minSpeed: 0.4,
+    maxSpeed: 4,
+    init: () => {
+      hoverSpeed.speed.addEventListener('mousemove', (e) => {
+        // Get Y coordinate for hover location over .speed, offset by how far .speed is from the top of the screen:
+        const y = e.pageY - e.currentTarget.offsetTop;
 
-  speed.addEventListener('mousemove', function(e) {
-    // Get Y coordinate for hover location over .speed, offset by how far .speed is from the top of the screen:
-    const y = e.pageY - this.offsetTop;
+        // Convert to a percentage:
+        const percent = y / e.currentTarget.offsetHeight;
 
-    // Convert to a percentage:
-    const percent = y / this.offsetHeight;
+        // Convert to the percentage number instead of decimal:
+        const height = `${Math.round(percent * 100)}%`;
+        // Set height of bar to match the hover percent:
+        hoverSpeed.bar.style.height = height;
 
-    // Set min and max speeds:
-    const min = 0.4;
-    const max = 4;
+        // Calculate playback rate:
+        const playbackRate = ((hoverSpeed.maxSpeed - hoverSpeed.minSpeed) * percent) + hoverSpeed.minSpeed;
+        // Display in the UI:
+        hoverSpeed.bar.textContent = `${playbackRate.toFixed(2)}x`;
+        // Set video playback rate to match:
+        hoverSpeed.video.playbackRate = playbackRate;
+      });
+    }
+  }
 
-    // Convert to the percentage number instead of decimal:
-    const height = `${Math.round(percent * 100)}%`;
-    // Set height of bar to match the hover percent:
-    bar.style.height = height;
-
-    // Calculate playback rate:
-    const playbackRate = ((max - min) * percent) + min;
-    // Display in the UI:
-    bar.textContent = `${playbackRate.toFixed(2)}x`;
-    // Set video playback rate to match:
-    video.playbackRate = playbackRate;
-  });
+  hoverSpeed.init();
 
 </script>
 </body>
