@@ -32,7 +32,7 @@ video {
 .speed-bar {
   align-items: center;
   background: linear-gradient(-170deg, #2376ae 0%, #c16ecf 100%);
-  color: white;
+  color: #fff;
   display: flex;
   height: 16.3%;
   justify-content: center;
